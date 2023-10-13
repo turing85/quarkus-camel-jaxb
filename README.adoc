@@ -1,0 +1,55 @@
+= Quarkus JAXB Bug
+
+== Build the application - JVM
+
+.Build the application, run the tests
+[code, bash]
+----
+./mvnw clean verify
+----
+
+Observe that the tests succeed
+
+== Build the application - Native
+
+.Build the application, run the tests
+[code, bash]
+----
+./mvnw --define native clean verify
+----
+
+Observe that the tests fail, and the application throws an exception:
+
+[code, bash]
+----
+...
+Caused by: java.lang.RuntimeException: org.glassfish.jaxb.runtime.v2.runtime.IllegalAnnotationsException: 1 counts of IllegalAnnotationExceptions
+Property expression appears in @XmlType.propOrder, but no such property exists. Maybe you meant executorService?
+	this problem is related to the following location:
+		at org.apache.camel.model.ThrottleDefinition
+
+	at io.quarkus.jaxb.runtime.JaxbContextProducer.createJAXBContext(JaxbContextProducer.java:82)
+	at io.quarkus.jaxb.runtime.JaxbContextProducer.jaxbContext(JaxbContextProducer.java:31)
+	at io.quarkus.jaxb.runtime.JaxbContextProducer_ProducerMethod_jaxbContext_6a6d20272304edd64c7bdfa35e3ed5d5971a3949_Bean.doCreate(Unknown Source)
+	at io.quarkus.jaxb.runtime.JaxbContextProducer_ProducerMethod_jaxbContext_6a6d20272304edd64c7bdfa35e3ed5d5971a3949_Bean.create(Unknown Source)
+	at io.quarkus.jaxb.runtime.JaxbContextProducer_ProducerMethod_jaxbContext_6a6d20272304edd64c7bdfa35e3ed5d5971a3949_Bean.create(Unknown Source)
+	at io.quarkus.arc.impl.AbstractSharedContext.createInstanceHandle(AbstractSharedContext.java:113)
+	at io.quarkus.arc.impl.AbstractSharedContext$1.get(AbstractSharedContext.java:37)
+	at io.quarkus.arc.impl.AbstractSharedContext$1.get(AbstractSharedContext.java:34)
+	at io.quarkus.arc.impl.LazyValue.get(LazyValue.java:26)
+	at io.quarkus.arc.impl.ComputingCache.computeIfAbsent(ComputingCache.java:69)
+	at io.quarkus.arc.impl.AbstractSharedContext.get(AbstractSharedContext.java:34)
+	at io.quarkus.jaxb.runtime.JaxbContextProducer_ProducerMethod_jaxbContext_6a6d20272304edd64c7bdfa35e3ed5d5971a3949_Bean.get(Unknown Source)
+	at io.quarkus.jaxb.runtime.JaxbContextProducer_ProducerMethod_jaxbContext_6a6d20272304edd64c7bdfa35e3ed5d5971a3949_Bean.get(Unknown Source)
+	at io.quarkus.arc.impl.Instances$3.get(Instances.java:132)
+	at io.quarkus.arc.impl.LazyValue.get(LazyValue.java:26)
+	at io.quarkus.arc.impl.LazyInstanceHandle.instanceInternal(LazyInstanceHandle.java:32)
+	at io.quarkus.arc.impl.AbstractInstanceHandle.get(AbstractInstanceHandle.java:46)
+	at de.turing85.converter.FooConverter.getContext(FooConverter.java:51)
+	at de.turing85.converter.FooConverter.unmarshalFromString(FooConverter.java:39)
+	at de.turing85.converter.FooConverter.unmarshal(FooConverter.java:34)
+	at java.base@21/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.apache.camel.support.ObjectHelper.invokeMethod(ObjectHelper.java:355)
+	... 28 more
+...
+----
