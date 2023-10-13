@@ -24,6 +24,7 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.MODULE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
+@SuppressWarnings("unused")
 public class Foo {
   private List<Bar> bars;
 

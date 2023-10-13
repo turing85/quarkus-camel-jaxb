@@ -21,6 +21,7 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.MODULE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
+@SuppressWarnings("unused")
 public class Bar {
   private int number;
 
