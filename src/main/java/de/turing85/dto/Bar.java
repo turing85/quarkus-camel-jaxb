@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @RegisterForReflection(serialization = true)
+@XmlType
 @XmlRootElement(name = "Bar")
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
-@XmlType
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor(access = AccessLevel.MODULE)
