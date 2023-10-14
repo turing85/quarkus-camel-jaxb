@@ -17,10 +17,14 @@ public class HttpRoute extends RouteBuilder {
 
   @Override
   public void configure() {
-    from(platformHttp(HTTP_ENDPOINT).httpMethodRestrict(Method.POST.name())).routeId(ROUTE_ID)
-        .convertBodyTo(Foo.class).log("Body : ${body.toString()}").log("Body as XML: ${body}")
+    // @formatter:off
+    from(platformHttp(HTTP_ENDPOINT).httpMethodRestrict(Method.POST.name()))
+        .routeId(ROUTE_ID)
+        .convertBodyTo(Foo.class)
+        .log("Body : ${body.toString()}")
+        .log("Body as XML: ${body}")
         .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(Response.Status.OK.getStatusCode()))
         .setHeader(Exchange.CONTENT_TYPE, constant(MediaType.APPLICATION_XML));
-
+    // @formatter:on
   }
 }
