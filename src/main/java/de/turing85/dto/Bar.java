@@ -25,18 +25,8 @@ import lombok.ToString;
 @Builder
 @SuppressWarnings("unused")
 public class Bar {
-  private int number;
-
   private String name;
-
-  @XmlElement(name = "Number")
-  public int getNumber() {
-    return number;
-  }
-
-  public void setNumber(int number) {
-    this.number = number;
-  }
+  private int number;
 
   @XmlElement(name = "Name")
   public String getName() {
@@ -45,5 +35,14 @@ public class Bar {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  @XmlElement(name = "Number")
+  public int getNumber() {
+    return number;
+  }
+
+  public void setNumber(int number) {
+    this.number = number;
   }
 }
